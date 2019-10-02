@@ -1,0 +1,80 @@
+scalar EmailAddress
+scalar URL
+directive @auth on FIELD_DEFENITION | FIELD
+
+type Query {
+    obtenerAllUsuarios:[Usuario]!
+    obtenerSingleUsuario(id:ID!):Usuario!
+    obtenerAllPublicaciones:[Publicacion]!
+    obtenerSinlgePublicacion(id:ID!):Publicacion!
+
+    me:Usuario!@auth
+}
+
+type Mutation {
+    crearNuevoUsuario(data:UsuarioInput):Usuario!
+    modificarUnUsuario(id:ID!,data:UsuarioUpdateInput!):Usuario!@auth
+    borrarUnUsuario(id:ID!):String!@auth
+    crearUnaPublicacion(data:PublicacionInput!):Publicacion!@auth
+    modificarUnaPublicacion(id:ID!,data:PublicacionUpdateInput!):Publicacion!@auth
+    borrarUnaPublicacion(id:ID!):String!@auth
+
+    login(email:EmailAddress!,password:String!):Auth!
+}
+
+type Auth{
+    token:String!
+    message:String!
+}
+
+type Usuario {
+    _id:ID!
+    usuarioname:String!
+    email:EmailAddress!
+    cumple:String
+    perfilImg:URL
+    publicaciones:[Publicacion]!
+    amigos:[Usuario]!
+}
+
+type UsuarioInput {
+    usuarioname:String!
+    email:EmailAddress!
+    password:String!
+    cumple:String
+    perfilImg:String
+}
+
+type UsuarioUpdateInput  {
+    usuarioname:String
+    email:EmailAddress
+    password:String
+    cumple:String
+    perfilImg:URL
+    isActive:Boolean
+}
+
+type Publicacion{
+    _id:ID!
+    titulo:String!
+    contenido:String
+    usuario:Usuario
+    PublicacionPhoto:URL!
+    #likes:Int!
+    likedBy:[Usuario]
+}
+
+input PublicacionInput{
+    titulo:String!
+    contenido:String
+    #author:String!
+    PublicacionPhoto:URL!
+}
+
+input PublicacionUpdateInput{
+    titulo:String
+    contenido:String
+    PublicacionPhoto:URL
+    likedBy:String
+    isActive:Boolean
+}
