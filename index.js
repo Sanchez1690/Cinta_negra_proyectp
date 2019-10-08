@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useCreateIndex:
 const mongo = mongoose.connection;
 
 mongo.on('error', (error) => console.log(error)).once('open', () => console.log('Connected on database'));
-const typeDefs = importSchema(__dirname+'/schema.graphql');
+const typeDefs = importSchema(__dirname + '/schema.graphql');
 //const typeDefs = importSchema(__dirname, '/schema.graphql');
 
 const schema = makeExecutableSchema({
