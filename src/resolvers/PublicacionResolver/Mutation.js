@@ -2,8 +2,8 @@ const { crearPublicacion, modificarPublicacion, borrarPublicacion } = require('.
 // const { getOneAuthor} = require('../../services/AuthorServices');
 const storage = require('../../utils/storage');
 
-const crearUnaPublicacion = async (_, { data }, { user }) => {
-    data.author = user._id;
+const crearUnaPublicacion = async (_, { data }, { user,pubsub }) => {
+    data.usuario = user._id;
     
     /* const author =await getOneAuthor(params.data.author);
     author.posts.push(post._id);
@@ -15,8 +15,14 @@ const crearUnaPublicacion = async (_, { data }, { user }) => {
         data={...data,PublicacionPhoto:image.url};
     }
     const post = await crearPublicacion(data);
-    user.posts.push(post.id);
+    user.publicaciones.push(post.id);
     user.save();
+    pubsub.publish('post',{
+        post:{
+            mutation:'CREATED',
+            data:post
+        }
+    });
     return post;
 };
 
@@ -32,9 +38,15 @@ const modificarUnaPublicacion = async (_,{id, data }, { user }) => {
     return post;
 };
 
-const borrarUnaPublicacion = async (_, params, { user }) => {
+const borrarUnaPublicacion = async (_, params, { user,pubsub }) => {
     const post = await borrarPublicacion(params.id, user);
     if (!post) throw new Error('Post not exist');
+    pubsub.publish('post',{
+        post:{
+            mutation:'DELETED',
+            data:post
+        }
+    });
     return post;
 };
 

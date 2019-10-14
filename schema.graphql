@@ -23,6 +23,15 @@ type Mutation {
     login(email:EmailAddress!,password:String!):Auth!
 }
 
+type Subscription{
+    publicacion:PublicacionSubscriptionPayload!
+}
+
+type PublicacionSubscriptionPayload{
+    mutation:String!,
+    data:Publicacion!
+}
+
 type Auth{
     token:String!
     message:String!
@@ -38,7 +47,7 @@ type Usuario {
     amigos:[Usuario]!
 }
 
-type UsuarioInput {
+input UsuarioInput {
     usuarioname:String!
     email:EmailAddress!
     password:String!
@@ -46,7 +55,7 @@ type UsuarioInput {
     perfilImg:String
 }
 
-type UsuarioUpdateInput  {
+input UsuarioUpdateInput  {
     usuarioname:String
     email:EmailAddress
     password:String
@@ -69,7 +78,7 @@ input PublicacionInput{
     titulo:String!
     contenido:String
     #author:String!
-    PublicacionPhoto:Upload!
+    PublicacionPhoto:Upload
 }
 
 input PublicacionUpdateInput{
