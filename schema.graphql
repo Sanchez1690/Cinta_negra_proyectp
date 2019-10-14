@@ -1,6 +1,7 @@
 scalar EmailAddress
 scalar URL
-#directive @auth on FIELD_DEFENITION | FIELD
+scalar Upload
+directive @auth on FIELD_DEFINITION | FIELD
 
 type Query {
     obtenerAllUsuarios:[Usuario]!
@@ -8,16 +9,16 @@ type Query {
     obtenerAllPublicaciones:[Publicacion]!
     obtenerSinlgePublicacion(id:ID!):Publicacion!
 
-    me:Usuario!#@auth
+    me:Usuario!@auth
 }
 
 type Mutation {
     crearNuevoUsuario(data:UsuarioInput):Usuario!
-    modificarUnUsuario(id:ID!,data:UsuarioUpdateInput!):Usuario!#@auth
-    borrarUnUsuario(id:ID!):String!#@auth
-    crearUnaPublicacion(data:PublicacionInput!):Publicacion!#@auth
-    modificarUnaPublicacion(id:ID!,data:PublicacionUpdateInput!):Publicacion!#@auth
-    borrarUnaPublicacion(id:ID!):String!#@auth
+    modificarUnUsuario(id:ID!,data:UsuarioUpdateInput!):Usuario!@auth
+    borrarUnUsuario(id:ID!):String!@auth
+    crearUnaPublicacion(data:PublicacionInput!):Publicacion!@auth
+    modificarUnaPublicacion(id:ID!,data:PublicacionUpdateInput!):Publicacion!@auth
+    borrarUnaPublicacion(id:ID!):String!@auth
 
     login(email:EmailAddress!,password:String!):Auth!
 }
@@ -68,13 +69,13 @@ input PublicacionInput{
     titulo:String!
     contenido:String
     #author:String!
-    PublicacionPhoto:URL!
+    PublicacionPhoto:Upload!
 }
 
 input PublicacionUpdateInput{
     titulo:String
     contenido:String
-    PublicacionPhoto:URL
+    PublicacionPhoto:Upload
     likedBy:String
     isActive:Boolean
 }
