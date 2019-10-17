@@ -77,7 +77,7 @@ type Publicacion{
 input PublicacionInput{
     titulo:String!
     contenido:String
-    usuario:Usuario!
+    usuario:String!
     PublicacionPhoto:Upload
 }
 
