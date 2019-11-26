@@ -15,7 +15,7 @@
     "graphql-tools": "^4.0.5",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.3",
+    "mongoose": "^5.7.5",
     "node-pre-gyp": "^0.13.0"
   },
   "devDependencies": {
